@@ -1,0 +1,17 @@
+{
+  "name": "mosaic-mesh-check",
+  "version": "1.0.0",
+  "description": "水下马赛克三角网本机核验工具",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/verify.test.mjs",
+    "build": "node tools/build.mjs",
+    "smoke": "node test/smoke.mjs",
+    "verify": "sh -c \"node --test test/verify.test.mjs && node tools/build.mjs && node test/smoke.mjs\"",
+    "start": "node server.mjs"
+  }
+}

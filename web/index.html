@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>水下马赛克三角网核验</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>三角网核验台</h1>
+    <p class="subtitle">水下遗址马赛克补配前的连续拼补底图检查 · 全部判定仅在本机完成</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel input-panel">
+      <h2>录入</h2>
+      <div class="editor">
+        <label for="pointsInput">测点（每行：编号 x y，整数）</label>
+        <textarea id="pointsInput" spellcheck="false" rows="9"></textarea>
+      </div>
+      <div class="editor">
+        <label for="trianglesInput">三角形（每行：a b c，严格逆时针）</label>
+        <textarea id="trianglesInput" spellcheck="false" rows="9"></textarea>
+      </div>
+      <div class="actions">
+        <button id="verifyBtn" type="button" class="primary">核验</button>
+        <button id="validSampleBtn" type="button">载入有效网格</button>
+        <button id="crossSampleBtn" type="button">载入交叉网格</button>
+        <button id="clearBtn" type="button">清空草稿</button>
+      </div>
+      <p class="hint">测点 4–20 个、编号唯一；三角形按录入顺序编号 T1…，边按首次出现顺序编号 e1…。改动草稿后旧报告立即作废。</p>
+    </section>
+
+    <section class="panel canvas-panel">
+      <h2>SVG 网格图</h2>
+      <div id="canvasWrap">
+        <svg id="meshSvg" viewBox="0 0 800 560" role="img" aria-label="三角网示意图"></svg>
+        <div id="canvasPlaceholder" class="placeholder">点击“核验”后在此查看三角形与边界环</div>
+      </div>
+      <div id="report" class="report" aria-live="polite"></div>
+    </section>
+
+    <section class="panel tables-panel">
+      <h2>边的相邻面</h2>
+      <div class="table-wrap">
+        <table id="edgeTable">
+          <thead>
+            <tr><th>边</th><th>端点</th><th>使用次数</th><th>相邻面</th><th>角色</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <h2>三角形</h2>
+      <div class="table-wrap">
+        <table id="triTable">
+          <thead>
+            <tr><th>三角形</th><th>顶点（录入顺序）</th><th>状态</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="./app.mjs"></script>
+</body>
+</html>
