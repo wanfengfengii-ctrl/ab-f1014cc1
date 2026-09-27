@@ -1,0 +1,29 @@
+services:
+  # 一次性核验服务：代码测试 + 前端构建 + 业务冒烟（有效网格/交叉网格），
+  # 完成后自行退出，退出码即报告（0 成功，非 0 失败）。
+  # 运行：docker compose build verify && docker compose run --rm verify
+  verify:
+    build:
+      context: .
+      target: verify
+    image: mosaic-mesh-verifier-verify:latest
+    restart: "no"
+
+  # 静态 Web 服务：宿主机端口由 WEB_PORT 配置（默认 8080），带健康检查。
+  # 运行：WEB_PORT=9000 docker compose up -d web
+  web:
+    build:
+      context: .
+      target: web
+    image: mosaic-mesh-verifier-web:latest
+    ports:
+      - "${WEB_PORT:-8080}:8080"
+    environment:
+      WEB_PORT: 8080
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:'+(process.env.WEB_PORT||8080)+'/healthz').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 3s

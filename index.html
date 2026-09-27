@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>马赛克测点三角网核验</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <h1>水下遗址马赛克 · 三角网核验台</h1>
+    <p class="subtitle">补配前确认网格无重叠、破口或异面局部结构 · 全部判定仅在本机浏览器完成</p>
+  </header>
+
+  <main class="layout">
+    <section class="panel input-panel">
+      <h2>测点与三角形录入</h2>
+
+      <label class="field-label" for="pointsInput">测点（每行：编号 x y，4–20 个唯一编号、整数坐标）</label>
+      <textarea id="pointsInput" spellcheck="false" rows="9"></textarea>
+
+      <label class="field-label" for="trianglesInput">三角形（每行：三个顶点编号，按录入顺序核验）</label>
+      <textarea id="trianglesInput" spellcheck="false" rows="9"></textarea>
+
+      <div class="buttons">
+        <button id="verifyBtn" class="primary">核验</button>
+        <button id="sampleValidBtn">载入有效网格</button>
+        <button id="sampleCrossBtn">载入交叉网格</button>
+        <button id="clearBtn" class="danger">清空</button>
+      </div>
+
+      <div id="report" class="report" aria-live="polite"></div>
+    </section>
+
+    <section class="panel canvas-panel">
+      <h2>SVG 网格图</h2>
+      <div class="legend">
+        <span><i class="swatch boundary"></i>边界环</span>
+        <span><i class="swatch interior"></i>内部边（两面相邻）</span>
+        <span><i class="swatch face"></i>三角形</span>
+        <span><i class="swatch risk"></i>风险证据</span>
+      </div>
+      <svg id="canvas" viewBox="0 0 800 560" role="img" aria-label="三角网示意图"></svg>
+      <div id="evidenceBox" class="evidence-box hidden"></div>
+    </section>
+
+    <section class="panel data-panel">
+      <h2>三角形与边的相邻面</h2>
+      <div class="table-wrap">
+        <h3>三角形（按录入顺序）</h3>
+        <table id="triTable">
+          <thead><tr><th>#</th><th>顶点</th><th>面积×2</th><th>状态</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="table-wrap">
+        <h3>边（按首次录入顺序）</h3>
+        <table id="edgeTable">
+          <thead><tr><th>#</th><th>边</th><th>相邻面</th><th>类型</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div id="boundaryInfo" class="boundary-info"></div>
+    </section>
+  </main>
+
+  <footer class="foot">本机静态页面，不上传任何数据。</footer>
+
+  <script type="module" src="src/app.js"></script>
+</body>
+</html>

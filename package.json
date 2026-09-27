@@ -1,0 +1,19 @@
+{
+  "name": "mosaic-mesh-verifier",
+  "version": "1.0.0",
+  "description": "水下遗址马赛克测点三角网核验工具（纯本机静态 Web 应用）",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "build": "node scripts/build.mjs",
+    "smoke": "node smoke/smoke.mjs",
+    "verify": "npm run test && npm run build && npm run smoke",
+    "serve": "node scripts/serve.mjs",
+    "start": "npm run build && node scripts/serve.mjs"
+  },
+  "license": "MIT"
+}
